@@ -1,0 +1,43 @@
+#Provisonar 
+vagrant provision --provision-with kafka
+
+#Dentro de la máquina virtual
+vagrant ssh
+
+#Vamos a directorio de KAFKA
+cd /opt/kafka/current
+dir
+
+#Observar si Kafka esta activo
+bin/vm-kafka-services status
+
+# Si no está activo 
+bin/vm-kafka-services start/stop
+
+#Ver los archivos creados dentro de Kafka
+bin/vm-kafka-topics -h
+bin/vm-kafka-topics --list
+
+#Crear un topic
+bin/kafka-console-producer.sh --topic test1 --bootstrap-server localhost:9092
+
+#Ya creado el topic 
+Escribir mensajes
+
+#Ahora necesitamos un consumidor de esos mensajes
+
+Abrir otra terminal
+
+#Abrir otra máquina virtual
+vagrant ssh
+#Vamos a directorio
+cd /opt/kafka/current
+
+#Crear consumidor
+#Datos nuevos, a tiempo real
+bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test1
+
+#Todos datos desde el primero
+bin/kafka-console-consumer.sh --topic test1 --bootstrap-server localhost:9092 --topic test1 --offset 0 --partition 0
+
+
